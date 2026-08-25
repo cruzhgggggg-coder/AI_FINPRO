@@ -1,89 +1,68 @@
-# TierLog
+# Insight Navigator & AI Recommender System
 
-TierLog adalah platform e-logbook berbasis kecerdasan buatan yang dirancang untuk mempermudah proses bimbingan skripsi[cite: 1]. Sistem ini mengubah rekaman audio diskusi bimbingan menjadi daftar revisi terstruktur yang diprioritaskan dan dihubungkan langsung dengan versi dokumen tugas akhir[cite: 1].
-
-Berdasarkan hasil evaluasi, penggunaan TierLog berhasil memangkas rata-rata waktu siklus revisi dari 6.8 hari menjadi 1.2 hari, serta meningkatkan pemahaman mahasiswa terhadap arahan dosen pembimbing hingga 90%[cite: 1].
-
----
+Platform berbasis Machine Learning dan web interaktif untuk menganalisis data kompetensi siswa serta memberikan rekomendasi strategi peningkatan pembelajaran secara presisi.
 
 ## Fitur Utama
 
-- Pemrosesan Transkrip Otomatis
-  Mengubah rekaman audio bimbingan menjadi teks transkrip lengkap dengan penanda waktu menggunakan model Speech-to-Text Whisper[cite: 1].
+* **Model Machine Learning (ONNX Runtime):** Inferensi rekomendasi strategi pembelajaran secara cepat dan aman di sisi backend maupun frontend.
+* **Visualisasi Radar Interactive:** Menampilkan peta analisis kompetensi secara visual untuk mempermudah evaluasi aspek kelebihan dan kekurangan siswa.
+* **Backend API (Node.js & TypeScript):** Service RESTful handal yang melayani pemrosesan data dan integrasi model machine learning.
+* **Frontend Modern (React & Vite):** Antarmuka pengguna responsif dengan pustaka komponen UI modern dan Tailwind CSS.
+* **Model Training Pipeline (Jupyter Notebook):** Eksperimen, pelatihan, dan konversi model machine learning ke format ONNX yang terdistribusi.
 
-- Klasifikasi Revisi Terstruktur
-  Mengelompokkan poin masukan ke dalam Higher-Order Concerns untuk revisi substansial seperti metodologi dan struktur, serta Lower-Order Concerns untuk perbaikan minor seperti tata bahasa dan format[cite: 1].
+## Arsitektur Proyek
 
-- Pelacakan Versi Dokumen
-  Menghubungkan potongan transkrip audio dan catatan revisi secara langsung ke versi paragraf dan dokumen yang sesuai[cite: 1].
+Proyek ini terbagi menjadi dua komponen utama:
 
-- Portal Validasi Dosen
-  Menyediakan antarmuka khusus bagi dosen pembimbing untuk meninjau, mengedit, menyetujui, atau menolak hasil klasifikasi AI sebelum diakses oleh mahasiswa[cite: 1].
+1. `api/`: Service backend berbasis Node.js dan TypeScript yang mengeksekusi inferensi model ONNX `recommender.onnx`.
+2. `insight-navigator/`: Aplikasi frontend SPA berbasis React, Vite, TypeScript, dan Tailwind CSS.
 
----
+## Ringkasan Teknologi
 
-## Arsitektur dan Teknologi
+* **Frontend:** React, TypeScript, Vite, Tailwind CSS, Lucide React, Shadcn UI
+* **Backend:** Node.js, Express / TypeScript, ONNX Runtime (`onnxruntime-node`)
+* **Machine Learning:** Python, Scikit-learn, ONNX
 
-Aplikasi ini menggunakan arsitektur terpisah untuk menjaga kinerja dan skalabilitas sistem[cite: 1]:
+## Panduan Instalasi dan Pengoperasian
 
-- Antarmuka Utama: Laravel[cite: 1]
-- Layanan Layar Belakang: Go dengan framework Gin dan GORM[cite: 1]
-- Basis Data: MySQL[cite: 1]
-- Mesin AI: Whisper Speech-to-Text dan Large Language Model untuk klasifikasi masukan[cite: 1]
+### Prasyarat
 
----
+* Node.js (versi 18 atau lebih baru)
+* Bun atau npm / yarn
 
-## Petunjuk Penggunaan
+### 1. Menjalankan Backend API
 
-Persyaratan Sistem
-- PHP versi 8.2 atau yang lebih baru
-- Go versi 1.20 atau yang lebih baru
-- MySQL versi 8.0 atau yang lebih baru
-- Node.js dan NPM
+```bash
+cd api
+npm install
+npm run dev
+```
 
-Langkah Instalasi
+Backend akan berjalan pada port default dan siap menerima request inferensi.
 
-1. Unduh repositori ini
-   git clone https://github.com/cruzhgggggg-coder/AI_FINPRO.git
-   cd AI_FINPRO
+### 2. Menjalankan Frontend Web Application
 
-2. Konfigurasi Layanan Go
-   cd backend
-   go mod download
-   go run main.go
+```bash
+cd insight-navigator
+bun install
+bun run dev
+```
 
-3. Konfigurasi Aplikasi Laravel
-   cd ../frontend
-   composer install
-   npm install
-   npm run dev
-   cp .env.example .env
-   php artisan key:generate
-   php artisan migrate
-   php artisan serve
+Buka peramban web dan akses URL lokal yang tampil pada terminal (biasanya `http://localhost:5173`).
 
----
+## Struktur Direktori Proyek
 
-## Ringkasan Evaluasi
-
-- Rata-rata Waktu Revisi: Berkurang dari 6.8 hari menjadi 1.2 hari[cite: 1]
-- Frekuensi Pengajuan Ulang: Turun dari 3.1 kali menjadi 0.7 kali[cite: 1]
-- Kesalahpahaman Masukan: Turun dari 80% menjadi 15%[cite: 1]
-- Tingkat Pemahaman Mahasiswa: Meningkat dari 20% menjadi 90%[cite: 1]
-
----
-
-## Tim Pengembang
-
-- Bryan Alexander: Pengembang Utama Mesin AI dan E-Logbook[cite: 1]
-- Zaky Manggala Putra Santoso: Pengembang Arsitektur Laravel dan Go[cite: 1]
-- Godwin Clief Fernando Mclay: Integrasi dan Implementasi Sistem[cite: 1]
-- Achmad Syukur Nur Ramadhan Asad: Pengembang Layanan Backend[cite: 1]
-- Gusti Pangestu: Dosen Pembimbing Penelitian[cite: 1]
-
----
-
-## Lisensi dan Data
-
-- Dataset penelitian dapat diakses publik melalui Kaggle pada tautan TierLog Dataset[cite: 1].
-- Proyek ini dirilis di bawah Lisensi MIT.
+```
+.
+├── api/                        # Service Backend API (TypeScript/Node.js)
+│   ├── app.ts                  # Entry point server Express
+│   ├── recommender.onnx        # File model ONNX untuk inferensi
+│   └── package.json
+├── insight-navigator/          # Web Client Dashboard (React/Vite)
+│   ├── src/
+│   │   ├── components/         # Komponen UI dan Visualisasi Radar
+│   │   ├── pages/              # Halaman Aplikasi
+│   │   └── App.tsx
+│   ├── public/                 # Static assets & model copy
+│   └── package.json
+└── recommended_system.ipynb    # Notebook pelatihan dan ekspor model ML
